@@ -1,33 +1,41 @@
+#include <algorithm>
+#include <iostream>
+#include <vector>
 #include <map>
+#include <unordered_map>
 
-class Solution {
-public:
-    vector<int> twoSum(vector<int>& nums, int target) {
-        std::vector<int> result {};
+using namespace std;
 
-        // unordered_map with numbers
-        std::unordered_map<int, int> numbers = {};
-        for (auto it = nums.begin(); it != nums.end(); ++it) {
-            auto i = std::distance(nums.begin(), it);
-            numbers[some_iterator] = i;
-        }
+void twoSum(vector<int>& nums, int target) {
+    std::vector<int> result;
 
-        for (auto it = nums.begin(); it != nums.end(); ++it) {
-            // get current index
-            auto i = std::distance(nums.begin(), it);
-
-            // does unordered_map contain target - number?
-            std::unordered_map<int, int>::const_iterator search = nums.find(target - it);
-            if(search != nums.end()) {
-                if (search->first > it) {
-                    result.push_back(i);
-                    result.push_back(search->second);
-                } else {
-                    result.push_back(search->second);
-                    result.push_back(search->i);
-                }
-            }
-        }
-        return result;
+    // unordered_map with numbers
+    std::unordered_map<int, int> numbers;
+    for (int i = 0; i < nums.size(); ++i) {
+        // key = the number, value = the number’s index
+        numbers[nums[i]] = i;
     }
-};
+
+    for (int i = 0; i < nums.size(); ++i) {
+        // does unordered_map contain target - number?
+        std::unordered_map<int, int>::const_iterator search = numbers.find(target - nums[i]);
+        if(search != numbers.end() && search->second != i) {
+            result.push_back(i);
+            result.push_back(search->second);
+            break;
+        }
+    }
+    cout << result.at(0) << endl;
+    cout << result.at(1) << endl;
+}
+
+int main(){
+  vector<int> nums;
+  nums.push_back(0);
+  nums.push_back(4);
+  nums.push_back(4);
+  nums.push_back(5);
+  int target = 9;
+  twoSum(nums, target);
+
+}
